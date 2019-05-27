@@ -62,6 +62,8 @@ import rkr.simplekeyboard.inputmethod.keyboard.KeyboardActionListener;
 import rkr.simplekeyboard.inputmethod.keyboard.KeyboardId;
 import rkr.simplekeyboard.inputmethod.keyboard.KeyboardSwitcher;
 import rkr.simplekeyboard.inputmethod.keyboard.MainKeyboardView;
+import rkr.simplekeyboard.inputmethod.keystroke.KeyboardInput;
+import rkr.simplekeyboard.inputmethod.keystroke.KeystrokeManager;
 import rkr.simplekeyboard.inputmethod.latin.common.Constants;
 import rkr.simplekeyboard.inputmethod.latin.define.DebugFlags;
 import rkr.simplekeyboard.inputmethod.latin.inputlogic.InputLogic;
@@ -100,6 +102,8 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
     private AlertDialog mOptionsDialog;
 
     public final UIHandler mHandler = new UIHandler(this);
+    public final KeystrokeManager ksManager = new KeystrokeManager(getApplicationContext());
+    public final KeyboardInput kbInput = new KeyboardInput(ksManager);
 
     public static final class UIHandler extends LeakGuardHandlerWrapper<LatinIME> {
         private static final int MSG_UPDATE_SHIFT_STATE = 0;
@@ -336,6 +340,7 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
         super.onCreate();
 
         mHandler.onCreate();
+        ksManager.onCreate();
 
         // TODO: Resolve mutual dependencies of {@link #loadSettings()} and
         // {@link #resetDictionaryFacilitatorIfNecessary()}.
@@ -361,6 +366,7 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
     @Override
     public void onDestroy() {
         mSettings.onDestroy();
+        ksManager.onDestroy();
         unregisterReceiver(mRingerModeChangeReceiver);
         super.onDestroy();
     }
@@ -404,6 +410,7 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
 
     @Override
     public void onStartInput(final EditorInfo editorInfo, final boolean restarting) {
+        ksManager.onStartInput();
         mHandler.onStartInput(editorInfo, restarting);
     }
 
@@ -419,6 +426,7 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
 
     @Override
     public void onFinishInput() {
+        ksManager.onFinishInput();
         mHandler.onFinishInput();
     }
 
@@ -793,7 +801,7 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
         return codePoint;
     }
 
-    // Implementation of {@link KeyboardActionListener}.
+    // Implementation of {@link KeystrokeActionListener}.
     @Override
     public void onCodeInput(final int codePoint, final int x, final int y,
             final boolean isKeyRepeat) {
@@ -809,6 +817,7 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
         final Event event = createSoftwareKeypressEvent(getCodePointForKeyboard(codePoint),
                 keyX, keyY, isKeyRepeat);
         onEvent(event);
+        kbInput.onCodeInput(codePoint, x, y, isKeyRepeat);
     }
 
     // This method is public for testability of LatinIME, but also in the future it should
@@ -841,7 +850,7 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
         return Event.createSoftwareKeypressEvent(codePoint, keyCode, keyX, keyY, isKeyRepeat);
     }
 
-    // Called from PointerTracker through the KeyboardActionListener interface
+    // Called from PointerTracker through the KeystrokeActionListener interface
     @Override
     public void onTextInput(final String rawText) {
         // TODO: have the keyboard pass the correct key code when we need it.
@@ -852,7 +861,7 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
         mKeyboardSwitcher.onEvent(event, getCurrentAutoCapsState(), getCurrentRecapitalizeState());
     }
 
-    // Called from PointerTracker through the KeyboardActionListener interface
+    // Called from PointerTracker through the KeystrokeActionListener interface
     @Override
     public void onFinishSlidingInput() {
         // User finished sliding input.
@@ -922,22 +931,24 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
         feedbackManager.performAudioFeedback(code);
     }
 
-    // Callback of the {@link KeyboardActionListener}. This is called when a key is depressed;
+    // Callback of the {@link KeystrokeActionListener}. This is called when a key is depressed;
     // release matching call is {@link #onReleaseKey(int,boolean)} below.
     @Override
     public void onPressKey(final int primaryCode, final int repeatCount,
             final boolean isSinglePointer) {
         mKeyboardSwitcher.onPressKey(primaryCode, isSinglePointer, getCurrentAutoCapsState(),
                 getCurrentRecapitalizeState());
+        kbInput.onPressKey(primaryCode, repeatCount, isSinglePointer);
         hapticAndAudioFeedback(primaryCode, repeatCount);
     }
 
-    // Callback of the {@link KeyboardActionListener}. This is called when a key is released;
+    // Callback of the {@link KeystrokeActionListener}. This is called when a key is released;
     // press matching call is {@link #onPressKey(int,int,boolean)} above.
     @Override
     public void onReleaseKey(final int primaryCode, final boolean withSliding) {
         mKeyboardSwitcher.onReleaseKey(primaryCode, withSliding, getCurrentAutoCapsState(),
                 getCurrentRecapitalizeState());
+        kbInput.onReleaseKey(primaryCode, withSliding);
     }
 
     // receive ringer mode change.
