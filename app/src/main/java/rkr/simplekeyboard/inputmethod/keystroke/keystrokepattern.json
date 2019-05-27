@@ -1,0 +1,9 @@
+[
+  {
+    "NoKeyPressDelay": 2.9877, // Before pressing this key
+    "primaryCode": 116,
+    "x": 3,
+    "y": 5,
+    "KeyPressDelay": 0.9877 //While a key is press
+  }
+]
