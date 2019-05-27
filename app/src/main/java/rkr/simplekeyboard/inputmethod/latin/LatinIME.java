@@ -102,8 +102,8 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
     private AlertDialog mOptionsDialog;
 
     public final UIHandler mHandler = new UIHandler(this);
-    public final KeystrokeManager ksManager = new KeystrokeManager(getApplicationContext());
-    public final KeyboardInput kbInput = new KeyboardInput(ksManager);
+    public KeystrokeManager ksManager;
+    public KeyboardInput kbInput;
 
     public static final class UIHandler extends LeakGuardHandlerWrapper<LatinIME> {
         private static final int MSG_UPDATE_SHIFT_STATE = 0;
@@ -338,7 +338,8 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
         KeyboardSwitcher.init(this);
         AudioAndHapticFeedbackManager.init(this);
         super.onCreate();
-
+        ksManager = new KeystrokeManager(getApplicationContext());
+        kbInput = new KeyboardInput(ksManager);
         mHandler.onCreate();
         ksManager.onCreate();
 
