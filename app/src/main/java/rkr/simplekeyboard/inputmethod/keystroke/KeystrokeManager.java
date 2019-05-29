@@ -6,6 +6,8 @@ import java.io.RandomAccessFile;
 import java.util.Random;
 
 import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -19,9 +21,11 @@ public class KeystrokeManager {
     private File file;
     private int newInput;
     private final Random rand;
+    KeystrokeSensors sensors;
 
     public KeystrokeManager(Context context) {
         this.context = context;
+        sensors = new KeystrokeSensors(context);
         rand = new Random();
         rand.setSeed(System.nanoTime());
     }

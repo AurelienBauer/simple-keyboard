@@ -48,6 +48,7 @@ import rkr.simplekeyboard.inputmethod.keyboard.internal.KeyPreviewView;
 import rkr.simplekeyboard.inputmethod.keyboard.internal.MoreKeySpec;
 import rkr.simplekeyboard.inputmethod.keyboard.internal.NonDistinctMultitouchHelper;
 import rkr.simplekeyboard.inputmethod.keyboard.internal.TimerHandler;
+import rkr.simplekeyboard.inputmethod.keystroke.KeyboardInput;
 import rkr.simplekeyboard.inputmethod.latin.RichInputMethodSubtype;
 import rkr.simplekeyboard.inputmethod.latin.common.Constants;
 import rkr.simplekeyboard.inputmethod.latin.common.CoordinateUtils;
@@ -141,6 +142,8 @@ public final class MainKeyboardView extends KeyboardView implements MoreKeysPane
 
     private final TimerHandler mTimerHandler;
     private final int mLanguageOnSpacebarHorizontalMargin;
+
+    private KeyboardInput kbInput;
 
     public MainKeyboardView(final Context context, final AttributeSet attrs) {
         this(context, attrs, R.attr.mainKeyboardViewStyle);
@@ -520,6 +523,7 @@ public final class MainKeyboardView extends KeyboardView implements MoreKeysPane
         if (getKeyboard() == null) {
             return false;
         }
+
         if (mNonDistinctMultitouchHelper != null) {
             if (event.getPointerCount() > 1 && mTimerHandler.isInKeyRepeat()) {
                 // Key repeating timer will be canceled if 2 or more keys are in action.
@@ -529,6 +533,9 @@ public final class MainKeyboardView extends KeyboardView implements MoreKeysPane
             mNonDistinctMultitouchHelper.processMotionEvent(event, mKeyDetector);
             return true;
         }
+        kbInput = KeyboardInput.getInstance();
+        if (kbInput != null)
+            kbInput.onTouchEvent(event);
         return processMotionEvent(event);
     }
 

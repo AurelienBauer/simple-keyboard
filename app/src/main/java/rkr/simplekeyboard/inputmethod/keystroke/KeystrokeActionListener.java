@@ -16,6 +16,8 @@
 
 package rkr.simplekeyboard.inputmethod.keystroke;
 
+import android.view.MotionEvent;
+
 import rkr.simplekeyboard.inputmethod.keyboard.PointerTracker;
 import rkr.simplekeyboard.inputmethod.latin.common.Constants;
 
@@ -58,25 +60,7 @@ public interface KeystrokeActionListener {
     // TODO: change this to send an Event object instead
     void onCodeInput(int primaryCode, int x, int y, boolean isKeyRepeat);
 
-    /**
-     * Sends a string of characters to the listener.
-     *
-     * @param text the string of characters to be registered.
-     */
-    void onTextInput(final String rawText);
-
-    /**
-     * Called when user finished sliding key input.
-     */
-    void onFinishSlidingInput();
-
-    /**
-     * Send a non-"code input" custom request to the listener.
-     * @return true if the request has been consumed, false otherwise.
-     */
-    boolean onCustomRequest(int requestCode);
-    void onMovePointer(int steps);
-    void onDeletePointer(int steps);
+    void onTouchEvent(MotionEvent event);
 
     KeystrokeActionListener EMPTY_LISTENER = new Adapter();
 
@@ -88,16 +72,6 @@ public interface KeystrokeActionListener {
         @Override
         public void onCodeInput(int primaryCode, int x, int y, boolean isKeyRepeat) {}
         @Override
-        public void onTextInput(String text) {}
-        @Override
-        public void onFinishSlidingInput() {}
-        @Override
-        public boolean onCustomRequest(int requestCode) {
-            return false;
-        }
-        @Override
-        public void onMovePointer(int steps) {}
-        @Override
-        public void onDeletePointer(int steps) {}
+        public void onTouchEvent(MotionEvent event) {}
     }
 }
