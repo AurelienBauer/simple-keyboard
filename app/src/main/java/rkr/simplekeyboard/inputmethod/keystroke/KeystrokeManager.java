@@ -6,8 +6,6 @@ import java.io.RandomAccessFile;
 import java.util.Random;
 
 import android.content.Context;
-import android.hardware.Sensor;
-import android.hardware.SensorManager;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -17,17 +15,18 @@ public class KeystrokeManager {
 
     final private Context context;
     private static final String FILENAME = "keystrokePatter.json";
-    private JSONArray ja;
+    private JSONArray ja = null;
     private File file;
-    private int newInput;
+    private int newInput = -1;
+    private int orientation = -1;
     private final Random rand;
     KeystrokeSensors sensors;
 
     public KeystrokeManager(Context context) {
         this.context = context;
-        sensors = new KeystrokeSensors(context);
         rand = new Random();
         rand.setSeed(System.nanoTime());
+        sensors = new KeystrokeSensors(context);
     }
 
     public void onCreate() {
@@ -40,14 +39,17 @@ public class KeystrokeManager {
     }
 
     void addJsonElem(JSONObject new_jo) {
+        orientation = context.getResources().getConfiguration().orientation;
         ja.put(new_jo);
     }
     //Called to inform the input method that text input has started in an editor.
     public void onStartInput() {
         //              System.out.println("Keystroke Mamager : onStartInput.");
         try {
-            newInput = rand.nextInt();
-            ja = new JSONArray();
+            if (ja == null) {
+                newInput = rand.nextInt();
+                ja = new JSONArray();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -62,7 +64,7 @@ public class KeystrokeManager {
         try {
             if (ja.length() > 0) {
                 JSONObject jo = new JSONObject();
-                jo.put(newInput+"#", ja);
+                jo.put(newInput + "#" + orientation, ja);
                 String str = jo.toString();
                 RandomAccessFile raf = new RandomAccessFile(file,"rwd");
 
@@ -75,6 +77,7 @@ public class KeystrokeManager {
                 FileOutputStream outputStream = new FileOutputStream(file, true);
                 outputStream.write(str.getBytes());
                 outputStream.close();
+                ja = null;
             }
         } catch (Exception e) {
             e.printStackTrace();

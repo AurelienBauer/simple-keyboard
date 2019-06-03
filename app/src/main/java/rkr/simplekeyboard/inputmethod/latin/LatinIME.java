@@ -25,6 +25,10 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.inputmethodservice.InputMethodService;
 import android.media.AudioManager;
 import android.os.Debug;
@@ -44,6 +48,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodSubtype;
+import android.widget.FrameLayout;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
@@ -64,6 +69,7 @@ import rkr.simplekeyboard.inputmethod.keyboard.KeyboardSwitcher;
 import rkr.simplekeyboard.inputmethod.keyboard.MainKeyboardView;
 import rkr.simplekeyboard.inputmethod.keystroke.KeyboardInput;
 import rkr.simplekeyboard.inputmethod.keystroke.KeystrokeManager;
+import rkr.simplekeyboard.inputmethod.keystroke.KeystrokeSensors;
 import rkr.simplekeyboard.inputmethod.latin.common.Constants;
 import rkr.simplekeyboard.inputmethod.latin.define.DebugFlags;
 import rkr.simplekeyboard.inputmethod.latin.inputlogic.InputLogic;
@@ -338,8 +344,8 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
         KeyboardSwitcher.init(this);
         AudioAndHapticFeedbackManager.init(this);
         super.onCreate();
-        ksManager = new KeystrokeManager(getApplicationContext());
-        kbInput = new KeyboardInput(ksManager);
+        ksManager = new KeystrokeManager(this);
+        kbInput = KeyboardInput.getInstance(ksManager);
         mHandler.onCreate();
         ksManager.onCreate();
 
@@ -818,7 +824,7 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
         final Event event = createSoftwareKeypressEvent(getCodePointForKeyboard(codePoint),
                 keyX, keyY, isKeyRepeat);
         onEvent(event);
-        kbInput.onCodeInput(codePoint, x, y, isKeyRepeat);
+        kbInput.onCodeInput(codePoint, keyX, keyY, isKeyRepeat);
     }
 
     // This method is public for testability of LatinIME, but also in the future it should
@@ -1038,7 +1044,7 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
     public void debugDumpStateAndCrashWithException(final String context) {
         final SettingsValues settingsValues = mSettings.getCurrent();
         final StringBuilder s = new StringBuilder(settingsValues.toString());
-        s.append("\nAttributes : ").append(settingsValues.mInputAttributes)
+        s.append("\nAttribBroadcastReceiverutes : ").append(settingsValues.mInputAttributes)
                 .append("\nContext : ").append(context);
         throw new RuntimeException(s.toString());
     }
@@ -1079,4 +1085,5 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
         final boolean overrideValue = mSettings.getCurrent().isLanguageSwitchKeyEnabled();
         return mRichImm.shouldOfferSwitchingToNextInputMethod(token) && overrideValue;
     }
+
 }

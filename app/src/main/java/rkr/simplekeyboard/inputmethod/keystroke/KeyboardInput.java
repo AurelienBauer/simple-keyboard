@@ -46,7 +46,9 @@ public class KeyboardInput implements KeystrokeActionListener {
                     .put("primaryCode", primaryCode)
                     .put("PressureOnPress", current_pressure)
                     .put("XOnPress", current_x_pos)
-                    .put("YOnPress", current_y_pos);
+                    .put("YOnPress", current_y_pos)
+                    .put("LinearAccelerationOnPress", ksManager.sensors.GetLinearAcceleration())
+                    .put("RotationVectorOnPress", ksManager.sensors.GetRotationVector());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -59,8 +61,10 @@ public class KeyboardInput implements KeystrokeActionListener {
             jo.put("KeyPressDelay", (release_key_time - press_key_time) / 1e6)
                     .put("PressureOnRelease", current_pressure)
                     .put("XOnRelease", current_x_pos)
-                    .put("YOnRelease", current_y_pos);
-            jo.put("vectorCoord", "X="+ (current_x_pos - jo.getInt("XOnPress"))+
+                    .put("YOnRelease", current_y_pos)
+                    .put("LinearAccelerationOnRelease", ksManager.sensors.GetLinearAcceleration())
+                    .put("RotationVectorOnRelease", ksManager.sensors.GetRotationVector())
+                    .put("vectorCoord", "X="+ (current_x_pos - jo.getInt("XOnPress"))+
                     ";Y="+ (current_y_pos - jo.getInt("YOnPress")));
             ksManager.addJsonElem(jo);
         } catch (Exception e) {
