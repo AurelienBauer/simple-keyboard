@@ -10,6 +10,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.List;
 import java.util.Stack;
 
 
@@ -44,14 +45,14 @@ public class KeystrokeSensors implements SensorEventListener {
     JSONObject GetRotationVector() throws JSONException {
         JSONObject jo = new JSONObject();
         jo.put("x", new JSONArray(rot_value_x.toArray()))
-                .put("y", new JSONArray(rot_value_y.toArray()))
-                .put("z", new JSONArray(rot_value_z.toArray()));
+        .put("y", new JSONArray(rot_value_y.toArray()))
+        .put("z", new JSONArray(rot_value_z.toArray()));
         return jo;
     }
 
-    private static void PushInStacklimited(Stack<Float> stack, Float value) {
-        if (stack.size() > 10) {
-            stack.pop();
+    private static void PushInListLimited(Stack<Float> stack, Float value) {
+        if (stack.size() > 5) {
+            stack.remove(0);
         }
         stack.push(value);
     }
@@ -61,15 +62,15 @@ public class KeystrokeSensors implements SensorEventListener {
         switch (event.sensor.getType()) {
 
             case (Sensor.TYPE_LINEAR_ACCELERATION):
-                PushInStacklimited(acc_value_x, event.values[0]);
-                PushInStacklimited(acc_value_y, event.values[1]);
-                PushInStacklimited(acc_value_z, event.values[2]);
+                PushInListLimited(acc_value_x, event.values[0]);
+                PushInListLimited(acc_value_y, event.values[1]);
+                PushInListLimited(acc_value_z, event.values[2]);
                 break;
 
             case (Sensor.TYPE_ROTATION_VECTOR):
-                PushInStacklimited(rot_value_x, event.values[0]);
-                PushInStacklimited(rot_value_y, event.values[1]);
-                PushInStacklimited(rot_value_z, event.values[2]);
+                PushInListLimited(rot_value_x, event.values[0]);
+                PushInListLimited(rot_value_y, event.values[1]);
+                PushInListLimited(rot_value_z, event.values[2]);
                 break;
         }
 
