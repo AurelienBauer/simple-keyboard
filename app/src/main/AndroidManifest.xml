@@ -17,6 +17,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="rkr.simplekeyboard.inputmethod">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <application android:label="@string/english_ime_name"

@@ -20,4 +20,5 @@ android {
 
 dependencies {
     implementation 'com.android.support:support-annotations:28.0.0'
+    implementation files('src/main/java/subProject/jsch-0.1.55.jar')
 }

