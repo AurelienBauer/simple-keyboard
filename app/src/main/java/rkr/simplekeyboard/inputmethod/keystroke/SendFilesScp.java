@@ -21,10 +21,8 @@ class SendFilesScp extends AsyncTask<String, Void, Void> {
     private static final String PATH_ON_SERV = "/files/";
     private static final String HOST = "51.83.97.141";
     private static final String USER = "ksdata";
+    private static final String PASSWORD = "%5rDgNoQ1UO*";
     private static final int PORT = 10022;
-    @SuppressLint("SdCardPath")
-    private static final String PRIV_KEY = "/data/data/rkr.simplekeyboard.inputmethod/files/id_rsa";
-
 
     @Override
     protected Void doInBackground(String... patternFilePath) {
@@ -44,10 +42,11 @@ class SendFilesScp extends AsyncTask<String, Void, Void> {
         Session session;
         JSch jsch = new JSch();
 
-        jsch.addIdentity(PRIV_KEY);
+        //jsch.addIdentity(PRIV_KEY);
         session = jsch.getSession(USER, HOST, PORT);
         Properties config = new java.util.Properties();
         config.put("StrictHostKeyChecking", "no");
+        session.setPassword(PASSWORD.getBytes());
         session.setConfig(config);
         session.connect();
         return session;
