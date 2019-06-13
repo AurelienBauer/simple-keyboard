@@ -42,7 +42,7 @@ public class KeyboardInput implements KeystrokeActionListener {
 
         try {
             jo.put("NoKeyPressDelay",(release_key_time == 0) ?
-                    (press_key_time - release_key_time) / 1e6 : null) // null if no key press before.
+                    null : (press_key_time - release_key_time) / 1e6) // null if no key press before.
                     .put("primaryCode", primaryCode)
                     .put("PressureOnPress", current_pressure)
                     .put("XOnPress", current_x_pos)
