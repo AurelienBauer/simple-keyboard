@@ -74,13 +74,6 @@ public class KeyboardInput implements KeystrokeActionListener {
 
     @Override
     public void onCodeInput(int primaryCode, int x, int y, boolean isKeyRepeat) {
-        /*try {
-            jo.put("primaryCode", primaryCode)
-                    .put("x", x)
-                    .put("y", y);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }*/
     }
 
     @Override
@@ -88,14 +81,6 @@ public class KeyboardInput implements KeystrokeActionListener {
         current_x_pos = (int)event.getX();
         current_y_pos = (int)event.getY();
         current_pressure = event.getPressure();
-        /*System.out.println("PointerCount = "+event.getPointerCount());
-        System.out.println("Pressure = "+event.getPressure(0));
-        System.out.println("Y = "+y);
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-            case MotionEvent.ACTION_MOVE:
-            case MotionEvent.ACTION_UP:
-        }*/
     }
 
 }

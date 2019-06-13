@@ -26,4 +26,6 @@
     <!-- Title for Android Keyboard settings screen. AOSP(Android Open Source Project) should not be translated.
          This resource should be copied from msgid="423615877174850267" -->
     <string name="english_ime_settings" translatable="false">Simple Keyboard Settings</string>
+
+    <string name="english_ime_service" translatable="false">Simple Keyboard Background service</string>
 </resources>

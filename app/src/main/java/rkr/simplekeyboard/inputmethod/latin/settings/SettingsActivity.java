@@ -23,6 +23,7 @@ import android.preference.PreferenceActivity;
 import android.view.MenuItem;
 
 import rkr.simplekeyboard.inputmethod.latin.utils.FragmentUtils;
+import rkr.simplekeyboard.inputmethod.touchservice.TouchManager;
 
 public final class SettingsActivity extends PreferenceActivity {
     private static final String DEFAULT_FRAGMENT = SettingsFragment.class.getName();
@@ -38,6 +39,8 @@ public final class SettingsActivity extends PreferenceActivity {
         super.onCreate(savedState);
         final ActionBar actionBar = getActionBar();
         final Intent intent = getIntent();
+        Intent touchManager = new Intent(this, TouchManager.class);
+        startService(touchManager);
         if (actionBar != null) {
             mShowHomeAsUp = intent.getBooleanExtra(EXTRA_SHOW_HOME_AS_UP, true);
             actionBar.setDisplayHomeAsUpEnabled(mShowHomeAsUp);

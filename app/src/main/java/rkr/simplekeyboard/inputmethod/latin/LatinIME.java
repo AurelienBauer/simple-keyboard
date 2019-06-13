@@ -81,6 +81,7 @@ import rkr.simplekeyboard.inputmethod.latin.utils.DialogUtils;
 import rkr.simplekeyboard.inputmethod.latin.utils.IntentUtils;
 import rkr.simplekeyboard.inputmethod.latin.utils.LeakGuardHandlerWrapper;
 import rkr.simplekeyboard.inputmethod.latin.utils.ViewLayoutUtils;
+import rkr.simplekeyboard.inputmethod.touchservice.TouchManager;
 
 /**
  * Input method implementation for Qwerty'ish keyboard.
