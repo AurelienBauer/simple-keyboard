@@ -6,7 +6,7 @@ import org.json.JSONObject;
 
 public class KeyboardInput implements KeystrokeActionListener {
 
-    private final KeystrokeManager ksManager;
+    private KeystrokeManager ksManager;
     private static KeyboardInput instance = null;
 
     public KeyboardInput(KeystrokeManager ksManger) {
@@ -96,6 +96,10 @@ public class KeyboardInput implements KeystrokeActionListener {
             case MotionEvent.ACTION_MOVE:
             case MotionEvent.ACTION_UP:
         }*/
+    }
+
+    public void setKsManager(KeystrokeManager ksManager) {
+        this.ksManager = ksManager;
     }
 
 }

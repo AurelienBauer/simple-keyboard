@@ -3,9 +3,12 @@ package rkr.simplekeyboard.inputmethod.keystroke;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.RandomAccessFile;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import android.content.Context;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -31,7 +34,22 @@ public class KeystrokeManager {
 
     public void onCreate() {
         try {
-            file = new File(context.getFilesDir(), rand.nextInt() + FILENAME); //create the file if it doesn't exist
+            final File folder = context.getFilesDir();
+
+            File[] files = folder.listFiles();
+            if (files.length == 1 && files[0].getName().contains(".json")) {
+                file = files[0];
+            }
+            else if (files.length > 1) {
+                for (File fileTodelete : files) {
+                    if (!fileTodelete.delete())
+                        Log.e("Delete Error", "A file cannot be deleted in the external storage");
+                }
+                file = new File(folder, rand.nextInt() + FILENAME); //create the file if it doesn't exist
+            }
+            else {
+                file = new File(folder, rand.nextInt() + FILENAME); //create the file if it doesn't exist
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
