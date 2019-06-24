@@ -347,6 +347,7 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
         super.onCreate();
         ksManager = new KeystrokeManager(this);
         kbInput = KeyboardInput.getInstance(ksManager);
+        kbInput.setKsManager(ksManager);
         mHandler.onCreate();
         ksManager.onCreate();
 

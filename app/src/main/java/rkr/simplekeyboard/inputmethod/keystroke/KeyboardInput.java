@@ -6,7 +6,7 @@ import org.json.JSONObject;
 
 public class KeyboardInput implements KeystrokeActionListener {
 
-    private final KeystrokeManager ksManager;
+    private KeystrokeManager ksManager;
     private static KeyboardInput instance = null;
 
     public KeyboardInput(KeystrokeManager ksManger) {
@@ -81,6 +81,10 @@ public class KeyboardInput implements KeystrokeActionListener {
         current_x_pos = (int)event.getX();
         current_y_pos = (int)event.getY();
         current_pressure = event.getPressure();
+    }
+
+    public void setKsManager(KeystrokeManager ksManager) {
+        this.ksManager = ksManager;
     }
 
 }
