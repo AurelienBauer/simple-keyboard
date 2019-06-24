@@ -3,8 +3,6 @@ package rkr.simplekeyboard.inputmethod.keystroke;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.RandomAccessFile;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 import android.content.Context;
