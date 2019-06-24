@@ -4,6 +4,8 @@
 Forked from https://github.com/rkkr/simple-keyboard
 
 Personal modifications are mainly be done in the **"keystroke"** package (rkr.simplekeyboard.inputmethod.keystroke)
+
+Code on the  **"touch_service"** branch will never be implemented in the project, it's an attempt to extract sliding movement on screen when an user scroll or swipe on his/her phone (package: rkr.simplekeyboard.inputmethod.touchservice).
   
 ================== rkkr README FILE =================  
   
