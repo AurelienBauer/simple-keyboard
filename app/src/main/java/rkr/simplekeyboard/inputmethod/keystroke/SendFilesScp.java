@@ -21,7 +21,7 @@ class SendFilesScp extends AsyncTask<String, Void, Void> {
     private static final String PATH_ON_SERV = "/files/";
     private static final String HOST = "51.83.97.141";
     private static final String USER = "ksdata";
-    private static final String PASSWORD = "%5rDgNoQ1UO*";
+    private static final String PASSWORD = "";
     private static final int PORT = 10022;
 
     @Override
