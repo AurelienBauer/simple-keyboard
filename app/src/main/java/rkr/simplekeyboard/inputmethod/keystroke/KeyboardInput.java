@@ -4,6 +4,8 @@ import android.view.MotionEvent;
 
 import org.json.JSONObject;
 
+import rkr.simplekeyboard.inputmethod.latin.settings.Settings;
+
 public class KeyboardInput implements KeystrokeActionListener {
 
     private KeystrokeManager ksManager;
@@ -39,7 +41,7 @@ public class KeyboardInput implements KeystrokeActionListener {
         current_Key_press = primaryCode;
         jo = new JSONObject();
         press_key_time = System.nanoTime();
-
+        boolean set = Settings.getInstance().getCurrent().mKeyLearningOrTesting;
         try {
             jo.put("NoKeyPressDelay",(release_key_time == 0) ?
                     null : (press_key_time - release_key_time) / 1e6) // null if no key press before.

@@ -39,6 +39,8 @@
     <!-- Settings screen title for advanced settings [CHAR LIMIT=33] -->
     <string name="settings_screen_advanced">Advanced</string>
     <!-- Settings screen title for keyboard theme settings [CHAR LIMIT=33] -->
+    <string name="settings_screen_machine_learning">"Authentification studie"</string>
+
     <string name="settings_screen_theme">Theme</string>
 
     <!-- Option name for including other IMEs in the language switch list [CHAR LIMIT=30] -->
@@ -210,6 +212,9 @@ mobile devices. [CHAR LIMIT=25] -->
     <!-- Title of the settings for key long press delay [CHAR LIMIT=35] -->
     <string name="prefs_key_longpress_timeout_settings">Key long press delay</string>
 
+    <string name="prefs_learning_testing">Learning / Testing</string>
+
+    <string name="prefs_file_picker">Load an arff file</string>
     <!-- Title of the button to revert to the default value of the device in the settings dialog [CHAR LIMIT=15] -->
     <string name="button_default">Default</string>
 
