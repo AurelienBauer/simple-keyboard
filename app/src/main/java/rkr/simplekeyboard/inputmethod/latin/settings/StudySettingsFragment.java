@@ -8,10 +8,12 @@ import android.preference.Preference;
 import android.util.Log;
 
 import rkr.simplekeyboard.inputmethod.R;
+import rkr.simplekeyboard.inputmethod.classifier.ArffLoader;
 
 public class StudySettingsFragment  extends SubScreenFragment {
 
     private static final int READ_REQUEST_CODE = 42;
+    private final ArffLoader loader = new ArffLoader();
     public void onCreate(final Bundle icicle) {
         super.onCreate(icicle);
         addPreferencesFromResource(R.xml.prefs_screen_study);
@@ -48,7 +50,11 @@ public class StudySettingsFragment  extends SubScreenFragment {
             Uri uri = null;
             if (resultData != null) {
                 uri = resultData.getData();
-                Log.i("INFO", "Uri: " + uri.toString());
+                if (uri != null) {
+                    loader.LoadArffFile(uri);
+                    Log.i("INFO", "Uri: " + uri.toString());
+
+                }
             }
         }
     }
