@@ -6,11 +6,15 @@
     android:key="screen_study">
     <CheckBoxPreference
         android:key="pref_learning_testing"
-        android:title="@string/prefs_learning_testing"
+        android:title="@string/prefs_training_testing"
         android:defaultValue="false" />
     <Preference
-        android:title="@string/prefs_file_picker"
-        android:key="pref_arff_loader"
+        android:title="@string/prefs_file_picker_train"
+        android:key="pref_arff_loader_train"
+        />
+    <Preference
+        android:title="@string/prefs_file_picker_test"
+        android:key="pref_arff_loader_test"
         />
 
 </PreferenceScreen>

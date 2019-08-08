@@ -1,6 +1,5 @@
 package rkr.simplekeyboard.inputmethod.keystroke;
 
-import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 
 import com.jcraft.jsch.Channel;
