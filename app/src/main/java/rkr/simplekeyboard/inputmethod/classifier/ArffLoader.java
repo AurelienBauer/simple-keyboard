@@ -4,15 +4,27 @@ import android.content.Context;
 import android.net.Uri;
 import android.widget.Toast;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+
 import weka.classifiers.Evaluation;
 import weka.classifiers.trees.RandomForest;
 import weka.core.Instances;
 import weka.core.converters.ConverterUtils.DataSource;
 
 public class ArffLoader {
+    private static ArffLoader instance = new ArffLoader();
     private Instances train = null;
-
+    private HashMap<Date, Evaluation> evaluations = new HashMap<>();
     final private RandomForest classifier = new RandomForest();
+    private int counter = 0;
+
+    public static ArffLoader getInstance() {
+        return instance;
+    }
+
+    private ArffLoader() {};
 
     public void LoadArffFileForLearning(Uri path, Context context) {
         try {
@@ -53,6 +65,7 @@ public class ArffLoader {
                     }
                     Evaluation eval = new Evaluation(this.train);
                     eval.evaluateModel(classifier, test);
+                    this.evaluations.put(Calendar.getInstance().getTime(), eval);
                     System.out.println(eval.toSummaryString());
                     System.out.println(eval.toMatrixString());
                     Toast.makeText(context, "Load for testing.", Toast.LENGTH_SHORT).show();
@@ -64,5 +77,9 @@ public class ArffLoader {
             e.printStackTrace();
             Toast.makeText(context, "Oups: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
+    }
+
+    public HashMap<Date, Evaluation> getEvaluations() {
+        return evaluations;
     }
 }

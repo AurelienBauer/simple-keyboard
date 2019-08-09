@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:latin="http://schemas.android.com/apk/res-auto"
+    android:title="@string/settings_screen_ml_results"
+    android:key="pref_screen_study_results">
+
+</PreferenceScreen>

@@ -17,7 +17,8 @@
         android:key="pref_arff_loader_test"
         />
     <Preference
+        android:fragment="rkr.simplekeyboard.inputmethod.latin.settings.StudyResultsFragment"
         android:title="@string/prefs_study_logs"
-        android:key="pref_study_logs"
+        android:key="pref_screen_study_results"
         />
 </PreferenceScreen>

@@ -19,7 +19,7 @@ public class StudySettingsFragment  extends SubScreenFragment {
     private static final int READ_REQUEST_CODE_TRAIN = 42;
     private static final int READ_REQUEST_CODE_TEST = 84;
     private static final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 1092;
-    private final ArffLoader loader = new ArffLoader();
+    private final ArffLoader loader = ArffLoader.getInstance();
     public void onCreate(final Bundle icicle) {
         super.onCreate(icicle);
         addPreferencesFromResource(R.xml.prefs_screen_study);
