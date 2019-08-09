@@ -11,15 +11,7 @@ import weka.core.converters.ConverterUtils.DataSource;
 
 public class ArffLoader {
     private Instances train = null;
-    final private String[] options = {
-           // "-P", "100",
-            "-I", "10",
-            //"-num-slots",  "1",
-            "-K", "0",
-            //"-M", "1.0",
-            //"-V", "0.001",
-            "-S", "1"
-    };
+
     final private RandomForest classifier = new RandomForest();
 
     public void LoadArffFileForLearning(Uri path, Context context) {
@@ -32,7 +24,12 @@ public class ArffLoader {
                 if (train.classIndex() == -1) {
                     train.setClassIndex(train.numAttributes() - 1);
                 }
-                classifier.setOptions(options);
+                classifier.setBatchSize(String.valueOf(100));
+                classifier.setNumIterations(100);
+                classifier.setNumExecutionSlots(1);
+                classifier.setNumDecimalPlaces(2);
+                classifier.setMaxDepth(0);
+                classifier.setSeed(1);
                 classifier.buildClassifier(this.train);
                 Toast.makeText(context, "Load for learning.", Toast.LENGTH_SHORT).show();
             }

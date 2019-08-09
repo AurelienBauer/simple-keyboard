@@ -16,5 +16,8 @@
         android:title="@string/prefs_file_picker_test"
         android:key="pref_arff_loader_test"
         />
-
+    <Preference
+        android:title="@string/prefs_study_logs"
+        android:key="pref_study_logs"
+        />
 </PreferenceScreen>
