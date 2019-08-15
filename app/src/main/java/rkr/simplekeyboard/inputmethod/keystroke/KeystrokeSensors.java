@@ -49,11 +49,68 @@ public class KeystrokeSensors implements SensorEventListener {
         return jo;
     }
 
+    JSONObject GetAverageAcceleration() throws JSONException {
+        JSONObject jo = new JSONObject();
+        jo.put("x", ComputeAverage(acc_value_x.toArray()))
+                .put("y", ComputeAverage(acc_value_y.toArray()))
+                .put("z", ComputeAverage(acc_value_z.toArray()));
+        return jo;
+    }
+
+    JSONObject GetAverageRotationVector() throws JSONException {
+        JSONObject jo = new JSONObject();
+        jo.put("x", ComputeAverage(rot_value_x.toArray()))
+                .put("y", ComputeAverage(rot_value_y.toArray()))
+                .put("z", ComputeAverage(rot_value_z.toArray()));
+        return jo;
+    }
+
+    JSONObject GetStdDevAcceleration() throws JSONException {
+        JSONObject jo = new JSONObject();
+        jo.put("x", ComputeStdDev(rot_value_x.toArray()))
+                .put("y", ComputeStdDev(rot_value_y.toArray()))
+                .put("z", ComputeStdDev(rot_value_z.toArray()));
+        return jo;
+    }
+
+    JSONObject GetStdDevRotationVector() throws JSONException {
+        JSONObject jo = new JSONObject();
+        jo.put("x", ComputeStdDev(rot_value_x.toArray()))
+                .put("y", ComputeStdDev(rot_value_y.toArray()))
+                .put("z", ComputeStdDev(rot_value_z.toArray()));
+        return jo;
+    }
+
     private static void PushInListLimited(Stack<Float> stack, Float value) {
         if (stack.size() > 5) {
             stack.remove(0);
         }
         stack.push(value);
+    }
+
+    private static float ComputeAverage(Object[] array) {
+        float sum = 0;
+
+        for (Object elem: array) {
+            sum += (Float) elem;
+        }
+
+        if (array.length > 0)
+            return sum / array.length;
+        return 0;
+    }
+
+    private static double ComputeStdDev(Object[] array) {
+        float average = ComputeAverage(array);
+        float sum = 0;
+
+        for (Object elem: array) {
+            sum += Math.pow((Float) elem - average, 2);
+        }
+
+        if (array.length > 0)
+            return Math.sqrt(sum / array.length);
+        return 0;
     }
 
     @Override

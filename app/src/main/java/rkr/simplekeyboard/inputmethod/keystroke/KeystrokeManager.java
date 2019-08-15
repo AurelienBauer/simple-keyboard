@@ -90,7 +90,6 @@ public class KeystrokeManager {
                 outputStream.write(str.getBytes());
                 outputStream.close();
                 ja = null;
-
                 new SendFilesScp().execute(file.getPath());
             }
         } catch (Exception e) {

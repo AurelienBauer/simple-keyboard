@@ -36,7 +36,8 @@ public class StudyResultsFragment extends SubScreenFragment {
 
     private void BuildTextBox(Date time, Evaluation eval) {
         try {
-           String str = eval.toSummaryString() + '\n' + eval.toMatrixString();
+           String str = eval.toSummaryString() + '\n' + eval.toClassDetailsString() + '\n' +
+                   eval.toCumulativeMarginDistributionString() + '\n' + eval.toMatrixString();
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
                 LongSummaryTextBoxPreference p = new LongSummaryTextBoxPreference(this.pScreen.getContext());
                 p.setTitle(time.toString());
